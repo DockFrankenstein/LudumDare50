@@ -1,6 +1,7 @@
 using qASIC.InputManagement;
 using UnityEngine;
 using qASIC;
+using System;
 
 namespace Game.Player
 {
@@ -55,6 +56,11 @@ namespace Game.Player
 
         Vector3 _lastPath;
 
+        public static event Action OnJump;
+
+        public static bool IsWalking { get; private set; }
+        public static bool IsSprinting { get; private set; }
+
         private void Awake()
         {
             if (controller == null)
@@ -107,6 +113,8 @@ namespace Game.Player
             qDebug.DisplayValue("input", input);
             qDebug.DisplayValue("path", path);
             qDebug.DisplayValue("ground", $"{IsGround}, prev: {IsGroundPrevious}");
+            qDebug.DisplayValue("isWalking", IsWalking);
+            qDebug.DisplayValue("isSprinting", IsSprinting);
         }
 
         Vector3 GetNormalPath(Vector2 input)
@@ -117,8 +125,11 @@ namespace Game.Player
             switch (IsGround || UnlockAirTime)
             {
                 case true:
+                    IsSprinting = InputManager.GetInput(sprintKey);
+                    IsWalking = input.magnitude > 0;
+
                     path = inputPath;
-                    path *= InputManager.GetInput(sprintKey) ? sprint : speed;
+                    path *= IsSprinting ? sprint : speed;
                     path *= SpeedMultiplier;
                     break;
                 case false:
@@ -172,6 +183,7 @@ namespace Game.Player
                 jumpPressed) && 
                 CursorManager.CanLook)
             {
+                OnJump?.Invoke();
                 GravityVelovity = Mathf.Sqrt(jumpHeight * 2f * gravity);
                 _acceptCoyoteTime = false;
             }
@@ -180,11 +192,15 @@ namespace Game.Player
         }
 
 
-        Vector3 GetNoclipPath(Vector2 input) =>
-            (cameraTransform.right * input.x + 
-            cameraTransform.forward * input.y + 
-            ((InputManager.GetInput(jumpKey) ? 1f : 0f) - (InputManager.GetInput(crouchKey) ? 1f : 0f)) * Vector3.up)
-            .normalized * noclipSpeed * SpeedMultiplier;
+        Vector3 GetNoclipPath(Vector2 input)
+        {
+            IsWalking = false;
+            IsSprinting = false;
+
+            return (cameraTransform.right * input.x + cameraTransform.forward * input.y + //WASD movement
+                ((InputManager.GetInput(jumpKey) ? 1f : 0f) - (InputManager.GetInput(crouchKey) ? 1f : 0f)) * Vector3.up) //Up and down
+                .normalized * noclipSpeed * SpeedMultiplier; //Speed
+        }
 
         private void OnDrawGizmosSelected()
         {
