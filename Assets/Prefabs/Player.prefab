@@ -746,7 +746,7 @@ MonoBehaviour:
   noclipSpeed: 16
   gravity: 30
   groundVelocity: 2
-  jumpHeight: 2
+  jumpHeight: 2.5
   groundPointOffset: {x: 0, y: -0.6, z: 0}
   groundPointRadius: 0.5
   layer:
@@ -754,6 +754,11 @@ MonoBehaviour:
     m_Bits: 72
   coyoteTime: 0.15
   jumpQueue: 0.2
+  dashLimit: 1
+  dashDuration: 0.3
+  dashRechargeDuration: 0.5
+  dashSpeed: 32
+  dashLiftLimit: 0.8
 --- !u!114 &5410359194375058439
 MonoBehaviour:
   m_ObjectHideFlags: 0

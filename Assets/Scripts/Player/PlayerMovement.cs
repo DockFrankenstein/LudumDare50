@@ -54,6 +54,13 @@ namespace Game.Player
         [SerializeField] float coyoteTime = 0.15f;
         [SerializeField] float jumpQueue = 0.2f;
 
+        [Header("Dash")]
+        [SerializeField] int dashLimit = 3;
+        [SerializeField] float dashDuration = 0.5f;
+        [SerializeField] float dashRechargeDuration = 0.2f;
+        [SerializeField] float dashSpeed = 30f;
+        [SerializeField] float dashLiftLimit = 0.5f;
+
         Vector3 _lastPath;
 
         public static event Action OnJump;
@@ -119,14 +126,33 @@ namespace Game.Player
             qDebug.DisplayValue("isWalking", IsWalking);
             qDebug.DisplayValue("isSprinting", IsSprinting);
             qDebug.DisplayValue("AdditionalVelocity", AdditionalVelocity);
+            qDebug.DisplayValue("isDashing", _isDashing);
+            qDebug.DisplayValue("dashDirection", dashDirection);
+            qDebug.DisplayValue("usedDashes", $"{usedDashes}/{dashLimit}");
         }
+
+        int usedDashes;
+
+        bool _isDashing;
+        float dashStartTime;
+        Vector3 dashDirection;
 
         Vector3 GetNormalPath(Vector2 input)
         {
             Vector3 path = new Vector3();
             Vector3 inputPath = (transform.right * input.x + transform.forward * input.y).normalized;
+            bool dash = !IsGround && Input.GetMouseButtonDown(0) && usedDashes < dashLimit && Time.time - dashStartTime > dashRechargeDuration && GravityVelovity < dashLiftLimit;
 
-            float gravityPath = GetGravityPath();
+            float gravityPath = _isDashing ? 0f : GetGravityPath();
+
+            if (dash)
+            {
+                usedDashes++;
+                _isDashing = true;
+                dashStartTime = Time.time;
+                dashDirection = inputPath.normalized;
+                GravityVelovity = 0;
+            }
 
             switch (IsGround || UnlockAirTime)
             {
@@ -141,14 +167,52 @@ namespace Game.Player
                     path *= SpeedMultiplier;
                     break;
                 case false:
-                    path = _lastPath + inputPath * airSpeed * SpeedMultiplier;
-                    path.y = 0f;
-                    path = Vector3.ClampMagnitude(path, sprint * SpeedMultiplier);
+                    switch (_isDashing)
+                    {
+                        case true:
+                            path += dashDirection * dashSpeed * SpeedMultiplier;
+
+                            if (Time.time - dashStartTime > dashDuration)
+                                StopDash();
+                            break;
+                        case false:
+                            path = _lastPath + inputPath * airSpeed * SpeedMultiplier;
+                            path.y = 0f;
+                            path = Vector3.ClampMagnitude(path, sprint * SpeedMultiplier);
+                            break;
+                    }
                     break;
             }
 
             path.y = gravityPath;
             return path;
+        }
+
+        public void StopDash()
+        {
+            _isDashing = false;
+            dashDirection = Vector3.zero;
+        }
+
+        bool _resetVelocityNextFixedUpdate;
+
+        private void FixedUpdate()
+        {
+            if (_resetVelocityNextFixedUpdate)
+            {
+                if (!CheckForGround())
+                    AdditionalVelocity = Vector3.zero;
+                _resetVelocityNextFixedUpdate = false;
+            }
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (((1 << hit.gameObject.layer) & layer) == 0)
+                return;
+
+            StopDash();
+            _resetVelocityNextFixedUpdate = true;
         }
 
         void CheckForAdditionalVelocity()
@@ -170,7 +234,7 @@ namespace Game.Player
 
         float GetGravityPath()
         {
-            IsGround = Physics.CheckSphere(transform.position + groundPointOffset, groundPointRadius, layer);
+            IsGround = CheckForGround();
             bool jumpPressed = InputManager.GetInputDown(jumpKey);
 
             bool forceJump = false;
@@ -179,8 +243,11 @@ namespace Game.Player
                 if (Time.time - _lastJumpQueueTime <= jumpQueue)
                     forceJump = true;
 
+                StopDash();
+                usedDashes = 0;
                 _acceptCoyoteTime = true;
                 _lastJumpQueueTime = 0f;
+                _resetVelocityNextFixedUpdate = false;
             }
 
             switch (IsGround)
@@ -188,7 +255,8 @@ namespace Game.Player
                 case true:
                     _lastGroundTime = Time.time;
                     GravityVelovity = -groundVelocity;
-                    AdditionalVelocity = Vector3.zero;
+                    if (!forceJump)
+                        AdditionalVelocity = Vector3.zero;
                     break;
                 case false:
                     if (jumpPressed)
@@ -212,6 +280,9 @@ namespace Game.Player
 
             return GravityVelovity;
         }
+
+        bool CheckForGround() =>
+            Physics.CheckSphere(transform.position + groundPointOffset, groundPointRadius, layer);
 
 
         Vector3 GetNoclipPath(Vector2 input)
