@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9003489086211340586}
   - component: {fileID: 9003489086211340587}
+  - component: {fileID: 2634082850427128298}
   m_Layer: 3
   m_Name: Platform
   m_TagString: Untagged
@@ -54,6 +55,19 @@ MonoBehaviour:
   platformSize: {x: 3.1, y: 0.6, z: 3.1}
   debugOffset: {x: 0, y: -0.25, z: 0}
   debugText: {fileID: 9003489087103133373}
+--- !u!114 &2634082850427128298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003489086211340589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cefd402d211bd942a13c96a6d2ef5bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformTarget: {fileID: 9003489086211340587}
 --- !u!1 &9003489087103133372
 GameObject:
   m_ObjectHideFlags: 0
