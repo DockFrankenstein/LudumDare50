@@ -60,6 +60,7 @@ namespace Game.Player
 
         public static bool IsWalking { get; private set; }
         public static bool IsSprinting { get; private set; }
+        public static Vector3 AdditionalVelocity { get; private set; }
 
         private void Awake()
         {
@@ -98,6 +99,9 @@ namespace Game.Player
                     break;
             }
 
+            _lastPath = path;
+            path += AdditionalVelocity;
+
             switch (controller?.enabled == true)
             {
                 case true:
@@ -108,13 +112,13 @@ namespace Game.Player
                     break;
             }
 
-            _lastPath = path;
 
             qDebug.DisplayValue("input", input);
             qDebug.DisplayValue("path", path);
             qDebug.DisplayValue("ground", $"{IsGround}, prev: {IsGroundPrevious}");
             qDebug.DisplayValue("isWalking", IsWalking);
             qDebug.DisplayValue("isSprinting", IsSprinting);
+            qDebug.DisplayValue("AdditionalVelocity", AdditionalVelocity);
         }
 
         Vector3 GetNormalPath(Vector2 input)
@@ -122,11 +126,15 @@ namespace Game.Player
             Vector3 path = new Vector3();
             Vector3 inputPath = (transform.right * input.x + transform.forward * input.y).normalized;
 
+            float gravityPath = GetGravityPath();
+
             switch (IsGround || UnlockAirTime)
             {
                 case true:
                     IsSprinting = InputManager.GetInput(sprintKey);
                     IsWalking = input.magnitude > 0;
+
+                    CheckForAdditionalVelocity();
 
                     path = inputPath;
                     path *= IsSprinting ? sprint : speed;
@@ -139,8 +147,21 @@ namespace Game.Player
                     break;
             }
 
-            path.y = GetGravityPath();
+            path.y = gravityPath;
             return path;
+        }
+
+        void CheckForAdditionalVelocity()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position + groundPointOffset, groundPointRadius, layer);
+
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                Logic.VelocityTransmitter transmitter = colliders[i].GetComponent<Logic.VelocityTransmitter>();
+                if (transmitter == null) continue;
+                AdditionalVelocity = transmitter.velocity;
+                return;
+            }
         }
 
         float _lastGroundTime;
@@ -167,6 +188,7 @@ namespace Game.Player
                 case true:
                     _lastGroundTime = Time.time;
                     GravityVelovity = -groundVelocity;
+                    AdditionalVelocity = Vector3.zero;
                     break;
                 case false:
                     if (jumpPressed)

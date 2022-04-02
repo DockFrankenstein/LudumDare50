@@ -30,7 +30,7 @@ namespace Game.Logic
             for (int i = 0; i < targetGameObjects.Length; i++)
             {
                 IActivatable activatable = targetGameObjects[i].GetComponent<IActivatable>();
-                if (activatable == null)
+                if (activatable != null)
                     targets.Add(activatable);
             }
         }
@@ -54,6 +54,17 @@ namespace Game.Logic
             anim.SetBool(animBoolName, state);
             for (int i = 0; i < targets.Count; i++)
                 targets[i].Activate(state);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.blue;
+            for (int i = 0; i < targetGameObjects.Length; i++)
+            {
+                if (targetGameObjects[i] == null) continue;
+                Gizmos.DrawLine(transform.position, targetGameObjects[i].transform.position);
+                Gizmos.DrawSphere(targetGameObjects[i].transform.position, 0.3f);
+            }
         }
     }
 }

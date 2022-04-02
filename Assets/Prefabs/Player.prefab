@@ -742,7 +742,7 @@ MonoBehaviour:
     actionName: Crouch
   speed: 8
   airSpeed: 0.3
-  sprint: 15
+  sprint: 12
   noclipSpeed: 16
   gravity: 30
   groundVelocity: 2
