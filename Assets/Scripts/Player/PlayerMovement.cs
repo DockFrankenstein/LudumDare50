@@ -38,6 +38,7 @@ namespace Game.Player
 
         //Gravity
         public bool IsGround { get; private set; }
+        public bool IsGroundPrevious { get; private set; }
         public float GravityVelovity { get; private set; }
 
         [Header("Gravity")]
@@ -47,6 +48,8 @@ namespace Game.Player
         [SerializeField] Vector3 groundPointOffset = new Vector3(0f, -0.6f, 0f);
         [SerializeField] float groundPointRadius = 0.5f;
         [SerializeField] LayerMask layer;
+        [SerializeField] float coyoteTime = 0.15f;
+        [SerializeField] float jumpQueue = 0.2f;
 
         private void Awake()
         {
@@ -109,16 +112,50 @@ namespace Game.Player
             return path * SpeedMultiplier;
         }
 
+        float _lastGroundTime;
+        bool _acceptCoyoteTime;
+        float _lastJumpQueueTime;
+
         float GetGravityPath()
         {
             IsGround = Physics.CheckSphere(transform.position + groundPointOffset, groundPointRadius, layer);
+            bool jumpPressed = InputManager.GetInputDown(jumpKey);
 
-            if (!IsGround)
-                return GravityVelovity -= gravity * Time.deltaTime;
+            bool forceJump = false;
+            if (IsGround && !IsGroundPrevious)
+            {
+                if (Time.time - _lastJumpQueueTime <= jumpQueue)
+                    forceJump = true;
 
-            GravityVelovity = -groundVelocity;
-            if (InputManager.GetInputDown(jumpKey) && CursorManager.CanLook && IsGround)
+                _acceptCoyoteTime = true;
+                _lastJumpQueueTime = 0f;
+            }
+
+            switch (IsGround)
+            {
+                case true:
+                    _lastGroundTime = Time.time;
+                    GravityVelovity = -groundVelocity;
+                    break;
+                case false:
+                    if (jumpPressed)
+                        _lastJumpQueueTime = Time.time;
+
+                    GravityVelovity -= gravity * Time.deltaTime;
+                    break;
+            }
+
+            IsGroundPrevious = IsGround;
+
+            if ((forceJump || //force jump
+                (IsGround || (Time.time - _lastGroundTime <= coyoteTime && _acceptCoyoteTime)) && //coyote time
+                jumpPressed) && 
+                CursorManager.CanLook)
+            {
                 GravityVelovity = Mathf.Sqrt(jumpHeight * 2f * gravity);
+                _acceptCoyoteTime = false;
+                forceJump = false;
+            }
 
             return GravityVelovity;
         }
