@@ -56,6 +56,7 @@ namespace qASIC.ProjectSettings
 #endif
         }
 
+#if UNITY_EDITOR && qASIC_DEV
         private static t CreateNewDefaultInstance<t>(string assetName) where t : ProjectSettingsBase
         {
             t asset = CreateInstance<t>();
@@ -63,5 +64,6 @@ namespace qASIC.ProjectSettings
             AssetDatabase.SaveAssets();
             return asset;
         }
+#endif
     }
 }

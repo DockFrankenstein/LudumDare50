@@ -12,7 +12,7 @@ namespace Game
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         static void Initialize()
         {
-            ChangeState("global", true);
+            ChangeState("global", false);
         }
 
         public static void ChangeState(string stateName, bool state)
@@ -21,6 +21,7 @@ namespace Game
             if (state)
             {
                 States.Add(stateName);
+                RefreshLockMode();
                 return;
             }
 
