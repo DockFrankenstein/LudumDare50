@@ -22,7 +22,7 @@ namespace Game.Player
         }
 
         public CharacterController controller;
-        [SerializeField] Transform cameraTransform;
+        public Transform cameraTransform;
 
         [Header("Input")]
         [SerializeField] InputAxisReference horizontalAxis;
@@ -33,6 +33,7 @@ namespace Game.Player
 
         [Header("Movement")]
         [SerializeField] float speed = 6f;
+        [SerializeField] float airSpeed = 3f;
         [SerializeField] float sprint = 10f;
         [SerializeField] float noclipSpeed = 16f;
 
@@ -50,6 +51,8 @@ namespace Game.Player
         [SerializeField] LayerMask layer;
         [SerializeField] float coyoteTime = 0.15f;
         [SerializeField] float jumpQueue = 0.2f;
+
+        Vector3 _lastPath;
 
         private void Awake()
         {
@@ -98,17 +101,32 @@ namespace Game.Player
                     break;
             }
 
+            _lastPath = path;
+
             qDebug.DisplayValue("input", input);
             qDebug.DisplayValue("path", path);
+            qDebug.DisplayValue("ground", $"{IsGround}, prev: {IsGroundPrevious}");
         }
 
         Vector3 GetNormalPath(Vector2 input)
         {
-            Vector3 path = (transform.right * input.x + transform.forward * input.y).normalized;
+            Vector3 path = new Vector3();
+            Vector3 inputPath = (transform.right * input.x + transform.forward * input.y).normalized;
 
-            path *= InputManager.GetInput(sprintKey) ? sprint : speed;
-            path.y += GetGravityPath();
+            switch (IsGround)
+            {
+                case true:
+                    path = inputPath;
+                    path *= InputManager.GetInput(sprintKey) ? sprint : speed;
+                    break;
+                case false:
+                    path = _lastPath + inputPath * airSpeed;
+                    path.y = 0f;
+                    path = Vector3.ClampMagnitude(path, sprint);
+                    break;
+            }
 
+            path.y = GetGravityPath();
             return path * SpeedMultiplier;
         }
 
@@ -154,7 +172,6 @@ namespace Game.Player
             {
                 GravityVelovity = Mathf.Sqrt(jumpHeight * 2f * gravity);
                 _acceptCoyoteTime = false;
-                forceJump = false;
             }
 
             return GravityVelovity;

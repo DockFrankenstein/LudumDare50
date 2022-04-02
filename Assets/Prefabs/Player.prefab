@@ -205,6 +205,7 @@ MonoBehaviour:
     useDefaultGroup: 1
     actionName: Crouch
   speed: 6
+  airSpeed: 0.3
   sprint: 10
   noclipSpeed: 16
   gravity: 30
@@ -216,7 +217,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   coyoteTime: 0.15
-  inputLagTime: 0.2
+  jumpQueue: 0.2
 --- !u!114 &5410359194375058439
 MonoBehaviour:
   m_ObjectHideFlags: 0
