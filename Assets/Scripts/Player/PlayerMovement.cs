@@ -50,6 +50,8 @@ namespace Game.Player
         [SerializeField] float jumpHeight = 2f;
         [SerializeField] Vector3 groundPointOffset = new Vector3(0f, -0.6f, 0f);
         [SerializeField] float groundPointRadius = 0.5f;
+        [SerializeField] Vector3 topPointOffset = new Vector3(0f, 0.6f, 0f);
+        [SerializeField] float topPointRadius = 0.5f;
         [SerializeField] LayerMask layer;
         [SerializeField] float coyoteTime = 0.15f;
         [SerializeField] float jumpQueue = 0.2f;
@@ -60,6 +62,7 @@ namespace Game.Player
         [SerializeField] float dashRechargeDuration = 0.2f;
         [SerializeField] float dashSpeed = 30f;
         [SerializeField] float dashLiftLimit = 0.5f;
+        [SerializeField] float dashUpHeight = 4f;
 
         Vector3 _lastPath;
 
@@ -127,32 +130,26 @@ namespace Game.Player
             qDebug.DisplayValue("isSprinting", IsSprinting);
             qDebug.DisplayValue("AdditionalVelocity", AdditionalVelocity);
             qDebug.DisplayValue("isDashing", _isDashing);
-            qDebug.DisplayValue("dashDirection", dashDirection);
-            qDebug.DisplayValue("usedDashes", $"{usedDashes}/{dashLimit}");
+            qDebug.DisplayValue("dashDirection", _dashDirection);
+            qDebug.DisplayValue("usedDashes", $"{_usedDashes}/{dashLimit}");
         }
 
-        int usedDashes;
+        int _usedDashes;
 
         bool _isDashing;
-        float dashStartTime;
-        Vector3 dashDirection;
+        float _dashStartTime;
+        Vector3 _dashDirection;
 
         Vector3 GetNormalPath(Vector2 input)
         {
             Vector3 path = new Vector3();
             Vector3 inputPath = (transform.right * input.x + transform.forward * input.y).normalized;
-            bool dash = !IsGround && Input.GetMouseButtonDown(0) && usedDashes < dashLimit && Time.time - dashStartTime > dashRechargeDuration && GravityVelovity < dashLiftLimit;
+            bool dash = !IsGround && Input.GetMouseButtonDown(0) && _usedDashes < dashLimit && Time.time - _dashStartTime > dashRechargeDuration && GravityVelovity < dashLiftLimit;
 
             float gravityPath = _isDashing ? 0f : GetGravityPath();
 
             if (dash)
-            {
-                usedDashes++;
-                _isDashing = true;
-                dashStartTime = Time.time;
-                dashDirection = inputPath.normalized;
-                GravityVelovity = 0;
-            }
+                Dash(inputPath);
 
             switch (IsGround || UnlockAirTime)
             {
@@ -170,9 +167,9 @@ namespace Game.Player
                     switch (_isDashing)
                     {
                         case true:
-                            path += dashDirection * dashSpeed * SpeedMultiplier;
+                            path += _dashDirection * dashSpeed * SpeedMultiplier;
 
-                            if (Time.time - dashStartTime > dashDuration)
+                            if (Time.time - _dashStartTime > dashDuration)
                                 StopDash();
                             break;
                         case false:
@@ -184,14 +181,31 @@ namespace Game.Player
                     break;
             }
 
-            path.y = gravityPath;
+            path.y += gravityPath;
             return path;
+        }
+
+        void Dash(Vector3 inputPath)
+        {
+            _usedDashes++;
+
+            if (inputPath.magnitude == 0)
+            {
+                GravityVelovity = Mathf.Sqrt(dashUpHeight * 2f * gravity);
+                _lastPath = Vector3.zero;
+                return;
+            }
+
+            _isDashing = true;
+            _dashStartTime = Time.time;
+            _dashDirection = inputPath;
+            GravityVelovity = 0f;
         }
 
         public void StopDash()
         {
             _isDashing = false;
-            dashDirection = Vector3.zero;
+            _dashDirection = Vector3.zero;
         }
 
         bool _resetVelocityNextFixedUpdate;
@@ -212,7 +226,8 @@ namespace Game.Player
                 return;
 
             StopDash();
-            _resetVelocityNextFixedUpdate = true;
+            if (!CheckForGround())
+                _resetVelocityNextFixedUpdate = true;
         }
 
         void CheckForAdditionalVelocity()
@@ -234,6 +249,7 @@ namespace Game.Player
 
         float GetGravityPath()
         {
+            IsGroundPrevious = IsGround;
             IsGround = CheckForGround();
             bool jumpPressed = InputManager.GetInputDown(jumpKey);
 
@@ -244,7 +260,7 @@ namespace Game.Player
                     forceJump = true;
 
                 StopDash();
-                usedDashes = 0;
+                _usedDashes = 0;
                 _acceptCoyoteTime = true;
                 _lastJumpQueueTime = 0f;
                 _resetVelocityNextFixedUpdate = false;
@@ -263,10 +279,12 @@ namespace Game.Player
                         _lastJumpQueueTime = Time.time;
 
                     GravityVelovity -= gravity * Time.deltaTime;
+
+                    //Check if head touches a celling
+                    if (GravityVelovity > 0 && Physics.CheckSphere(transform.position + topPointOffset, topPointRadius, layer))
+                        GravityVelovity = 0f;
                     break;
             }
-
-            IsGroundPrevious = IsGround;
 
             if ((forceJump || //force jump
                 (IsGround || (Time.time - _lastGroundTime <= coyoteTime && _acceptCoyoteTime)) && //coyote time
@@ -299,6 +317,8 @@ namespace Game.Player
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position + groundPointOffset, groundPointRadius);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position + topPointOffset, topPointRadius);
         }
     }
 }

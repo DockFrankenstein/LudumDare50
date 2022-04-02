@@ -758,7 +758,8 @@ MonoBehaviour:
   dashDuration: 0.3
   dashRechargeDuration: 0.5
   dashSpeed: 32
-  dashLiftLimit: 0.8
+  dashLiftLimit: 5
+  dashUpHeight: 4
 --- !u!114 &5410359194375058439
 MonoBehaviour:
   m_ObjectHideFlags: 0
