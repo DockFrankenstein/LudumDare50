@@ -741,7 +741,7 @@ MonoBehaviour:
     useDefaultGroup: 1
     actionName: Crouch
   speed: 8
-  airSpeed: 0.3
+  airSpeed: 0.8
   sprint: 12
   noclipSpeed: 16
   gravity: 30
@@ -749,6 +749,8 @@ MonoBehaviour:
   jumpHeight: 2.5
   groundPointOffset: {x: 0, y: -0.6, z: 0}
   groundPointRadius: 0.5
+  topPointOffset: {x: 0, y: 0.6, z: 0}
+  topPointRadius: 0.5
   layer:
     serializedVersion: 2
     m_Bits: 72

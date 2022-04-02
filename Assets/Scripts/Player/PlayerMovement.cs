@@ -146,12 +146,20 @@ namespace Game.Player
         {
             Vector3 path = new Vector3();
             Vector3 inputPath = (transform.right * input.x + transform.forward * input.y).normalized;
-            bool dash = !IsGround && Input.GetMouseButtonDown(0) && _usedDashes < dashLimit && Time.time - _dashStartTime > dashRechargeDuration && GravityVelovity < dashLiftLimit;
+            bool canDash = !IsGround && _usedDashes < dashLimit && Time.time - _dashStartTime > dashRechargeDuration;
+
+            if (canDash && _usedDashes == 0)
+                canDash = GravityVelovity < dashLiftLimit;
 
             float gravityPath = _isDashing ? 0f : GetGravityPath();
 
-            if (dash)
-                Dash(inputPath);
+            if (canDash)
+            {
+                if (Input.GetMouseButtonDown(0))
+                    Dash(inputPath.magnitude == 0 ? transform.forward : inputPath);
+                else if (Input.GetMouseButtonDown(1))
+                    DashUp();
+            }
 
             switch (IsGround || UnlockAirTime)
             {
@@ -187,16 +195,17 @@ namespace Game.Player
             return path;
         }
 
+        void DashUp()
+        {
+            _usedDashes++;
+            GravityVelovity = Mathf.Sqrt(dashUpHeight * 2f * gravity);
+            _dashStartTime = Time.time;
+            _lastPath = Vector3.zero;
+        }
+
         void Dash(Vector3 inputPath)
         {
             _usedDashes++;
-
-            if (inputPath.magnitude == 0)
-            {
-                GravityVelovity = Mathf.Sqrt(dashUpHeight * 2f * gravity);
-                _lastPath = Vector3.zero;
-                return;
-            }
 
             _isDashing = true;
             _dashStartTime = Time.time;
@@ -253,7 +262,7 @@ namespace Game.Player
 
         float _lastGroundTime;
         bool _acceptCoyoteTime;
-        float _lastJumpQueueTime;
+        float _lastJumpQueueTime = float.MinValue;
 
         float GetGravityPath()
         {
