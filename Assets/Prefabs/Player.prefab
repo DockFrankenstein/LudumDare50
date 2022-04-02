@@ -204,9 +204,9 @@ MonoBehaviour:
     groupName: Game
     useDefaultGroup: 1
     actionName: Crouch
-  speed: 6
+  speed: 8
   airSpeed: 0.3
-  sprint: 10
+  sprint: 15
   noclipSpeed: 16
   gravity: 30
   groundVelocity: 2

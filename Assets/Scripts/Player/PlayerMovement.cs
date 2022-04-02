@@ -7,6 +7,7 @@ namespace Game.Player
     public class PlayerMovement : MonoBehaviour
     {
         public static bool Noclip { get; private set; } = false;
+        public static bool UnlockAirTime { get; set; } = false;
         public static float SpeedMultiplier { get; set; } = 1f;
 
         public static void SetNoclipActive(bool state)
@@ -113,21 +114,22 @@ namespace Game.Player
             Vector3 path = new Vector3();
             Vector3 inputPath = (transform.right * input.x + transform.forward * input.y).normalized;
 
-            switch (IsGround)
+            switch (IsGround || UnlockAirTime)
             {
                 case true:
                     path = inputPath;
                     path *= InputManager.GetInput(sprintKey) ? sprint : speed;
+                    path *= SpeedMultiplier;
                     break;
                 case false:
-                    path = _lastPath + inputPath * airSpeed;
+                    path = _lastPath + inputPath * airSpeed * SpeedMultiplier;
                     path.y = 0f;
-                    path = Vector3.ClampMagnitude(path, sprint);
+                    path = Vector3.ClampMagnitude(path, sprint * SpeedMultiplier);
                     break;
             }
 
             path.y = GetGravityPath();
-            return path * SpeedMultiplier;
+            return path;
         }
 
         float _lastGroundTime;
