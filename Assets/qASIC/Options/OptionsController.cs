@@ -109,7 +109,6 @@ namespace qASIC.Options
                         DisposeTemp();
                     }
 
-                    Debug.Log(attr.Name.ToLower());
                     UserPreferences.Add(attr.Name.ToLower(), defaultValue);
                 }
                 catch { }

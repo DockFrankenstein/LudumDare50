@@ -14,6 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultGroup: 0
   Groups:
-  - groupName: Default
-    actions: []
+  - groupName: Game
+    actions:
+    - actionName: Forward
+      keys: 77000000
+    - actionName: Backward
+      keys: 73000000
+    - actionName: Left
+      keys: 61000000
+    - actionName: Right
+      keys: 64000000
+    - actionName: Sprint
+      keys: 30010000
+    - actionName: Jump
+      keys: 20000000
+    - actionName: Crouch
+      keys: 32010000
+    axes:
+    - axisName: Horizontal
+      positiveAction: Right
+      negativeAction: Left
+    - axisName: Vertical
+      positiveAction: Forward
+      negativeAction: Backward
+  - groupName: UI
+    actions:
+    - actionName: Console
+      keys: 60000000
     axes: []

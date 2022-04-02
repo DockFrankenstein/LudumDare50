@@ -12,7 +12,7 @@ namespace Game
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         public static void LoadSystems()
         {
-            if (Application.CanStreamedLevelBeLoaded(sceneName))
+            if (!Application.CanStreamedLevelBeLoaded(sceneName))
             {
                 qDebug.LogError("Cannot load systems scene - scene doesn't exist!");
                 return;
