@@ -57,7 +57,7 @@ namespace Game.Player
         [SerializeField] float jumpQueue = 0.2f;
 
         [Header("Dash")]
-        [SerializeField] int dashLimit = 3;
+        public int dashLimit = 3;
         [SerializeField] float dashDuration = 0.5f;
         [SerializeField] float dashRechargeDuration = 0.2f;
         [SerializeField] float dashSpeed = 30f;
@@ -106,6 +106,8 @@ namespace Game.Player
                     break;
                 case true:
                     path = GetNoclipPath(input);
+                    AdditionalVelocity = Vector3.zero;
+                    GravityVelovity = 0f;
                     break;
             }
 
@@ -208,6 +210,12 @@ namespace Game.Player
             _dashDirection = Vector3.zero;
         }
 
+        public void ResetDash()
+        {
+            StopDash();
+            _usedDashes = 0;
+        }
+
         bool _resetVelocityNextFixedUpdate;
 
         private void FixedUpdate()
@@ -259,8 +267,7 @@ namespace Game.Player
                 if (Time.time - _lastJumpQueueTime <= jumpQueue)
                     forceJump = true;
 
-                StopDash();
-                _usedDashes = 0;
+                ResetDash();
                 _acceptCoyoteTime = true;
                 _lastJumpQueueTime = 0f;
                 _resetVelocityNextFixedUpdate = false;
