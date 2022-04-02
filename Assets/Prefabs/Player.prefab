@@ -757,11 +757,12 @@ MonoBehaviour:
   coyoteTime: 0.15
   jumpQueue: 0.2
   dashLimit: 1
-  dashDuration: 0.3
-  dashRechargeDuration: 0.5
+  dashDuration: 0.5
+  dashRechargeDuration: 0.7
   dashSpeed: 32
   dashLiftLimit: 5
-  dashUpHeight: 4
+  dashUpDuration: 0
+  dashUpHeight: 2
 --- !u!114 &5410359194375058439
 MonoBehaviour:
   m_ObjectHideFlags: 0

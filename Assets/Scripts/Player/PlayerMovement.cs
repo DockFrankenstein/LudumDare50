@@ -200,7 +200,8 @@ namespace Game.Player
             _usedDashes++;
             GravityVelovity = Mathf.Sqrt(dashUpHeight * 2f * gravity);
             _dashStartTime = Time.time;
-            _lastPath = Vector3.zero;
+            //_dashDirection = Vector3.zero;
+            //_lastPath = Vector3.zero;
         }
 
         void Dash(Vector3 inputPath)
