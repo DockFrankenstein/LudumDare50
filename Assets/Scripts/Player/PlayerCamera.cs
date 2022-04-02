@@ -6,7 +6,7 @@ namespace Game
     public class PlayerCamera : MonoBehaviour
     {
         [OptionsSetting("sensitivity", 1f)]
-        static void ChangeSensitivity(float value) => Sensitivity = value;
+        public static void ChangeSensitivity(float value) => Sensitivity = value;
 
         public static float Sensitivity { get; set; } = 1f;
 

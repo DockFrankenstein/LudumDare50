@@ -30,6 +30,8 @@ MonoBehaviour:
       keys: 20000000
     - actionName: Crouch
       keys: 32010000
+    - actionName: Interact
+      keys: 65000000
     axes:
     - axisName: Horizontal
       positiveAction: Right
