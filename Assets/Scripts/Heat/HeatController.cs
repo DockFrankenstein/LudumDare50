@@ -23,12 +23,12 @@ namespace Game.Heat
 
         void HandlePlayerJump()
         {
-            StartCoroutine(HeatManager.DecreaseGradually(jumpHeatSpeed));
+            StartCoroutine(HeatManager.IncreaseGradually(jumpHeatSpeed));
         }
 
         private void Update()
         {
-            HeatManager.Heat -= idleHeatSpeed * Time.deltaTime;
+            HeatManager.Heat += idleHeatSpeed * Time.deltaTime;
 
             if (PlayerMovement.IsWalking)
                 HandlePlayerWalk();
@@ -41,13 +41,7 @@ namespace Game.Heat
 
         void HandlePlayerWalk()
         {
-            if (PlayerMovement.IsSprinting)
-            {
-                HeatManager.Heat -= sprintHeatSpeed * Time.deltaTime;
-                return;
-            }
-
-            HeatManager.Heat -= movementHeatSpeed * Time.deltaTime;
+            HeatManager.Heat += (PlayerMovement.IsSprinting ? sprintHeatSpeed : movementHeatSpeed) * Time.deltaTime;
         }
     }
 }

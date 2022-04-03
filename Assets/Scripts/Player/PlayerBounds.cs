@@ -7,6 +7,10 @@ namespace Game
     {
         public int maxHeight;
 
+        [Header("Debug")]
+        [SerializeField] bool showDebugBorders;
+        [SerializeField] Vector3 debugNorderSize = new Vector3(100f, 0.3f, 100f);
+
         [HideInInspector] public bool outOfBounds;
 
         public event Action OnExitBounds;
@@ -38,10 +42,11 @@ namespace Game
 
         private void OnDrawGizmos()
         {
+            if (!showDebugBorders) return;
             Gizmos.color = Color.yellow;
             Vector3 pos = transform.position;
             pos.y = maxHeight;
-            Gizmos.DrawCube(pos, new Vector3(1000f, 0.5f, 1000f));
+            Gizmos.DrawCube(pos, debugNorderSize);
         }
     }
 }
