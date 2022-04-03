@@ -35,5 +35,10 @@ namespace Game.Save
             targetPlayer.Teleport(state.position, state.rotation);
             targetPlayer.ResetAdditionalVelocity();
         }
+
+        public override void DeleteVersion(int version)
+        {
+            states.Remove(version);
+        }
     }
 }

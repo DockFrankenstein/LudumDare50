@@ -21,7 +21,12 @@ namespace Game.Save
 
         public override void RevertVersion(int version)
         {
-            switchTarget.ChangeState(states[version]);
+            switchTarget.ForceChangeState(states[version]);
+        }
+
+        public override void DeleteVersion(int version)
+        {
+            states.Remove(version);
         }
     }
 }

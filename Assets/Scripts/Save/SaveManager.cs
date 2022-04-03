@@ -16,6 +16,7 @@ namespace Game.Save
         int currentVersion = -1;
         List<SaveNode> nodes = new List<SaveNode>();
 
+        public static event Action OnStartRevert;
         public static event Action OnRevert;
 
         public int NewestVersion => newestVersion;
@@ -80,10 +81,17 @@ namespace Game.Save
                 return;
             }
 
-            Singleton.currentVersion = version;
-
             for (int i = 0; i < Singleton.nodes.Count; i++)
-                Singleton.nodes[i].RevertVersion(Singleton.currentVersion);
+            {
+                for (int ver = version + 1; ver <= Singleton.currentVersion; ver++)
+                    Singleton.nodes[i].DeleteVersion(ver);
+
+                Singleton.nodes[i].RevertVersion(version);
+            }
+
+            Singleton.newestVersion = version;
+            Singleton.currentVersion = version;
+            OnRevert?.Invoke();
 
             qDebug.Log($"[Save] Save reverted to version '{Singleton.currentVersion}'", "save");
         }
@@ -107,14 +115,25 @@ namespace Game.Save
                 return;
             }
 
-            OnRevert?.Invoke();
-            Singleton.StartCoroutine(WaitForRevert());
+            Revert(Singleton.currentVersion);
         }
 
-        private static IEnumerator WaitForRevert()
+        public static void Revert(int version)
+        {
+            if (Singleton == null)
+            {
+                qDebug.LogError("[Save] Cannot revert, singleton not assigned!");
+                return;
+            }
+
+            OnStartRevert?.Invoke();
+            Singleton.StartCoroutine(WaitForRevert(version));
+        }
+
+        private static IEnumerator WaitForRevert(int version)
         {
             yield return new WaitForSecondsRealtime(revertDuration);
-            RevertInstant();
+            RevertInstant(version);
         }
     }
 }

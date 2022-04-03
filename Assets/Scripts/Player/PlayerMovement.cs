@@ -40,8 +40,8 @@ namespace Game.Player
         [SerializeField] float noclipSpeed = 16f;
 
         //Gravity
-        public bool IsGround { get; private set; }
-        public bool IsGroundPrevious { get; private set; }
+        public static bool IsGround { get; private set; }
+        public static bool IsGroundPrevious { get; private set; }
         public float GravityVelovity { get; private set; }
 
         [Header("Gravity")]
@@ -67,6 +67,9 @@ namespace Game.Player
         Vector3 _lastPath;
 
         public static event Action OnJump;
+        public static event Action OnLand;
+        public static event Action OnDash;
+        public static event Action OnDashUp;
 
         public static bool IsWalking { get; private set; }
         public static bool IsSprinting { get; private set; }
@@ -213,17 +216,17 @@ namespace Game.Player
 
         void DashUp()
         {
+            OnDashUp?.Invoke();
             _usedDashes++;
             GravityVelovity = Mathf.Sqrt(dashUpHeight * 2f * gravity);
             _dashStartTime = Time.time;
-            //_dashDirection = Vector3.zero;
-            //_lastPath = Vector3.zero;
         }
 
         void Dash(Vector3 inputPath)
         {
             _usedDashes++;
 
+            OnDash?.Invoke();
             _isDashing = true;
             _dashStartTime = Time.time;
             _dashDirection = inputPath;
@@ -297,6 +300,7 @@ namespace Game.Player
                 _acceptCoyoteTime = true;
                 _lastJumpQueueTime = 0f;
                 _resetVelocityNextFixedUpdate = false;
+                OnLand?.Invoke();
             }
 
             switch (IsGround)

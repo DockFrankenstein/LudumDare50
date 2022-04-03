@@ -15,18 +15,15 @@ namespace Game.UI
         [SerializeField] AnimationCurve errorCurve;
         [SerializeField] float errorBlinkDuration = 0.4f;
 
-        bool _displayError;
         float[] _partErrorTime;
         float[] _partErrorSpeed;
 
+        Color[] _normalColors;
+
+        public float ErrorLevel { get; set; }
+
         private void Awake()
         {
-            DisplayNormal();
-        }
-
-        public void DisplayError()
-        {
-            _displayError = true;
             _partErrorTime = new float[parts.Length];
             for (int i = 0; i < _partErrorTime.Length; i++)
                 _partErrorTime[i] = Random.Range(0f, errorBlinkDuration);
@@ -34,27 +31,24 @@ namespace Game.UI
             _partErrorSpeed = new float[parts.Length];
             for (int i = 0; i < _partErrorSpeed.Length; i++)
                 _partErrorSpeed[i] = Random.Range(errorMinSpeed, errorMaxSpeed);
-        }
 
-        public void DisplayNormal()
-        {
-            _displayError = false;
-
+            _normalColors = new Color[parts.Length];
             for (int i = 0; i < parts.Length; i++)
-                parts[i].color = Color.Lerp(lightNormalColor, darkNormalColor, Random.Range(0f, 1f));
+                _normalColors[i] = Color.Lerp(lightNormalColor, darkNormalColor, Random.Range(0f, 1f));
         }
 
         private void Update()
         {
-            if (_displayError)
-                AnimateError();
+            Animate();
         }
 
-        void AnimateError()
+        void Animate()
         {
             for (int i = 0; i < parts.Length; i++)
             {
-                parts[i].color = Color.Lerp(darkErrorColor, lightErrorColor, errorCurve.Evaluate(_partErrorTime[i] / errorBlinkDuration));
+                Color dark = Color.Lerp(_normalColors[i], darkErrorColor, ErrorLevel);
+                Color light = Color.Lerp(_normalColors[i], lightErrorColor, ErrorLevel);
+                parts[i].color = Color.Lerp(dark, light, errorCurve.Evaluate(_partErrorTime[i] / errorBlinkDuration));
                 _partErrorTime[i] += Time.deltaTime * _partErrorSpeed[i];
             }
         }

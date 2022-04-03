@@ -1,15 +1,15 @@
 using System.Collections.Generic;
-using Game.Logic;
+using Game.Save;
 using qASIC.Console.Commands;
 
 namespace Game.Commands
 {
-    public class PlatformDebugCommand : GameConsoleCommand
+    public class CheckpointDebugCommand : GameConsoleCommand
     {
-        public override string CommandName { get; } = "platform_debug";
-        public override string Description { get; } = "toggles platform debug";
-        public override string[] Aliases { get; } = new string[] { "pd" };
-
+        public override string CommandName { get; } = "checkpoint_debug";
+        public override string Description { get; } = "toggles checkpoint debug";
+        public override string[] Aliases { get; } = new string[] { "cd" };
+        
         public override void Run(List<string> args)
         {
             if (!CheckForArgumentCount(args, 0, 1)) return;
@@ -19,7 +19,7 @@ namespace Game.Commands
             {
                 //no args
                 case 1:
-                    state = !Platform.Debug;
+                    state = !Checkpoint.DebugMode;
                     break;
                 //1 args
                 case 2:
@@ -32,8 +32,8 @@ namespace Game.Commands
                     break;
             }
 
-            Platform.Debug = state;
-            Log($"Platform debug has been {(state ? "enabled" : "disabled")}!", "cheat");
+            Checkpoint.DebugMode = state;
+            Log($"Checkpoint debug has been {(state ? "enabled" : "disabled")}!", "cheat");
         }
     }
 }

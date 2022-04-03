@@ -37,5 +37,10 @@ namespace Game.Save
             platformTarget.PlatformTime = state.time;
             platformTarget.SetPosition();
         }
+
+        public override void DeleteVersion(int version)
+        {
+            states.Remove(version);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Game.Save
 
         public abstract void CreateVersion(int version);
         public abstract void RevertVersion(int version);
+        public abstract void DeleteVersion(int version);
     }
 }
