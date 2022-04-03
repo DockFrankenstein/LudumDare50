@@ -49,15 +49,23 @@ namespace Game.Logic
         public void ChangeState(bool state)
         {
             if (CurrentState == state || oneTimeUse && CurrentState) return;
+            ForceChangeState(state);
+        }
+
+        public void ForceChangeState(bool state)
+        {
             CurrentState = state;
 
-            anim.SetBool(animBoolName, state);
+            if (anim != null)
+                anim.SetBool(animBoolName, state);
+
             for (int i = 0; i < targets.Count; i++)
                 targets[i].Activate(state);
         }
 
         private void OnDrawGizmosSelected()
         {
+            if (targetGameObjects == null) return;
             Gizmos.color = Color.blue;
             for (int i = 0; i < targetGameObjects.Length; i++)
             {

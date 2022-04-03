@@ -6,7 +6,7 @@ namespace Game.Logic
     public class Platform : MonoBehaviour, IActivatable
     {
         [InspectorLabel("Start Position")] [SerializeField] Vector3 startPos;
-        [InspectorLabel("Start Position")] [SerializeField] Vector3 endPos;
+        [InspectorLabel("End Position")] [SerializeField] Vector3 endPos;
         [SerializeField] Vector3 offset;
         [SerializeField] VelocityTransmitter platform;
         [SerializeField] float speed = 3f;
@@ -34,6 +34,8 @@ namespace Game.Logic
         {
             Active = invertActivation;
             CalcDistance();
+
+            platform.transform.position = transform.position + offset + startPos;
         }
 
         public void Activate(bool state)
@@ -99,10 +101,10 @@ namespace Game.Logic
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawCube(transform.position + offset + debugOffset + startPos, platformSize);
+            Gizmos.DrawCube(transform.position + offset + debugOffset + endPos, platformSize);
 
             Gizmos.color = Color.green;
-            Gizmos.DrawCube(transform.position + offset + debugOffset + endPos, platformSize);
+            Gizmos.DrawCube(transform.position + offset + debugOffset + startPos, platformSize);
         }
     }
 }

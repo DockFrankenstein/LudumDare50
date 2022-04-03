@@ -110,7 +110,9 @@ namespace Game.Player
 
         void Move()
         {
-            Vector3 input = new Vector2(InputManager.GetMapAxisRaw(horizontalAxis), InputManager.GetMapAxisRaw(verticalAxis));
+            Vector3 input = CursorManager.CanLook ?
+                new Vector3(InputManager.GetMapAxisRaw(horizontalAxis), InputManager.GetMapAxisRaw(verticalAxis)) :
+                Vector3.zero;
             Vector3 path = new Vector2();
 
             switch (Noclip)
@@ -340,6 +342,9 @@ namespace Game.Player
         {
             IsWalking = false;
             IsSprinting = false;
+
+            if (!CursorManager.CanLook)
+                return Vector3.zero;
 
             return (cameraTransform.right * input.x + cameraTransform.forward * input.y + //WASD movement
                 ((InputManager.GetInput(jumpKey) ? 1f : 0f) - (InputManager.GetInput(crouchKey) ? 1f : 0f)) * Vector3.up) //Up and down
