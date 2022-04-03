@@ -13,6 +13,17 @@ MonoBehaviour:
   m_Name: NewSimplePostProcess
   m_EditorClassIdentifier: 
   m_Active: 1
+  _cartoonVolume: {fileID: 0}
+  _fastBlurVolume: {fileID: 0}
+  _chromaticVolume: {fileID: 0}
+  _simpleEdgeVolume: {fileID: 0}
+  _drunkVolume: {fileID: 0}
+  _monochromeVolume: {fileID: 0}
+  _edgeGlowVolume: {fileID: 0}
+  _sketchVolume: {fileID: 0}
+  _crtVolume: {fileID: 0}
+  _glitchVolume: {fileID: 0}
+  _vcrVolume: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25,9 +36,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
   m_Name: URP Asset_Renderer
   m_EditorClassIdentifier: 
-  m_RendererFeatures:
-  - {fileID: -2267118980233528688}
-  m_RendererFeatureMap: 907aa2974c9389e0
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
