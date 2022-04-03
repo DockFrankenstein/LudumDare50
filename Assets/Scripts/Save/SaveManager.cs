@@ -1,16 +1,22 @@
 using UnityEngine;
 using qASIC;
 using System.Collections.Generic;
+using System.Collections;
+using System;
 
 namespace Game.Save
 {
     public class SaveManager : MonoBehaviour
     {
+        private const float revertDuration = 0.2f;
+
         public static SaveManager Singleton { get; private set; }
 
         int newestVersion = -1;
         int currentVersion = -1;
         List<SaveNode> nodes = new List<SaveNode>();
+
+        public static event Action OnRevert;
 
         public int NewestVersion => newestVersion;
         public int CurrentVersion => currentVersion;
@@ -60,7 +66,7 @@ namespace Game.Save
             return Singleton.currentVersion;
         }
 
-        public static void Revert(int version)
+        public static void RevertInstant(int version)
         {
             if (Singleton == null)
             {
@@ -82,6 +88,17 @@ namespace Game.Save
             qDebug.Log($"[Save] Save reverted to version '{Singleton.currentVersion}'", "save");
         }
 
+        public static void RevertInstant()
+        {
+            if (Singleton == null)
+            {
+                qDebug.LogError("[Save] Cannot revert, singleton not assigned!");
+                return;
+            }
+
+            RevertInstant(Singleton.currentVersion);
+        }
+
         public static void Revert()
         {
             if (Singleton == null)
@@ -90,7 +107,14 @@ namespace Game.Save
                 return;
             }
 
-            Revert(Singleton.currentVersion);
+            OnRevert?.Invoke();
+            Singleton.StartCoroutine(WaitForRevert());
+        }
+
+        private static IEnumerator WaitForRevert()
+        {
+            yield return new WaitForSecondsRealtime(revertDuration);
+            RevertInstant();
         }
     }
 }

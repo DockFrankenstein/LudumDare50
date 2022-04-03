@@ -666,6 +666,8 @@ GameObject:
   - component: {fileID: 5410359194375058439}
   - component: {fileID: 5410359194375058438}
   - component: {fileID: 5410359194747061842}
+  - component: {fileID: 5057568627750207247}
+  - component: {fileID: 8309667666285467386}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -761,7 +763,6 @@ MonoBehaviour:
   dashRechargeDuration: 0.7
   dashSpeed: 32
   dashLiftLimit: 5
-  dashUpDuration: 0
   dashUpHeight: 2
 --- !u!114 &5410359194375058439
 MonoBehaviour:
@@ -815,3 +816,30 @@ MonoBehaviour:
     useDefaultGroup: 1
     actionName: Interact
   castPoint: {fileID: 5410359194094398267}
+--- !u!114 &5057568627750207247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5410359194375058443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7803202569c68e4d894d12f0ccd3537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHeight: -20
+  outOfBounds: 0
+--- !u!114 &8309667666285467386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5410359194375058443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a5b55e29a21714aa10fcec13849aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPlayer: {fileID: 5410359194375058440}

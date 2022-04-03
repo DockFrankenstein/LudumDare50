@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Game.Save;
 using qASIC.Console.Commands;
@@ -27,7 +26,7 @@ namespace Game.Commands
                         return;
                     }
 
-                    SaveManager.Revert(version);
+                    SaveManager.RevertInstant(version);
                     break;
             }
         }

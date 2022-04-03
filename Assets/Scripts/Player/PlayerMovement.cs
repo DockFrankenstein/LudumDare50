@@ -94,6 +94,20 @@ namespace Game.Player
             Move();
         }
 
+        public void Teleport(Vector3 position) =>
+            Teleport(position, transform.rotation);
+
+        public void Teleport(Vector3 position, Quaternion rotation)
+        {
+            bool previousEnabled = controller.enabled;
+            controller.enabled = false;
+
+            transform.position = position;
+            transform.rotation = rotation;
+
+            controller.enabled = previousEnabled;
+        }
+
         void Move()
         {
             Vector3 input = new Vector2(InputManager.GetMapAxisRaw(horizontalAxis), InputManager.GetMapAxisRaw(verticalAxis));
@@ -319,6 +333,8 @@ namespace Game.Player
         bool CheckForGround() =>
             Physics.CheckSphere(transform.position + groundPointOffset, groundPointRadius, layer);
 
+        public void ResetAdditionalVelocity() =>
+            AdditionalVelocity = Vector3.zero;
 
         Vector3 GetNoclipPath(Vector2 input)
         {
