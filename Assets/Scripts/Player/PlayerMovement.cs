@@ -39,6 +39,8 @@ namespace Game.Player
         [SerializeField] float sprint = 10f;
         [SerializeField] float noclipSpeed = 16f;
 
+        public static bool IgnoreMouseUntillUp { get; set; }
+
         //Gravity
         public static bool IsGround { get; private set; }
         public static bool IsGroundPrevious { get; private set; }
@@ -94,6 +96,11 @@ namespace Game.Player
 
         private void Update()
         {
+            if (IgnoreMouseUntillUp && Input.GetMouseButton(0))
+            {
+                IgnoreMouseUntillUp = false;
+            }
+
             Move();
         }
 
@@ -174,9 +181,9 @@ namespace Game.Player
 
             if (canDash)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !IgnoreMouseUntillUp)
                     Dash(inputPath.magnitude == 0 ? transform.forward : inputPath);
-                else if (Input.GetMouseButtonDown(1))
+                else if (InputManager.GetInputDown(jumpKey) && !CoyoteInRange())
                     DashUp();
             }
 
@@ -313,7 +320,7 @@ namespace Game.Player
                         AdditionalVelocity = Vector3.zero;
                     break;
                 case false:
-                    if (jumpPressed)
+                    if (jumpPressed && _usedDashes == dashLimit)
                         _lastJumpQueueTime = Time.time;
 
                     GravityVelovity -= gravity * Time.deltaTime;
@@ -325,7 +332,7 @@ namespace Game.Player
             }
 
             if ((forceJump || //force jump
-                (IsGround || (Time.time - _lastGroundTime <= coyoteTime && _acceptCoyoteTime)) && //coyote time
+                (IsGround || CoyoteInRange() && _acceptCoyoteTime) && //coyote time
                 jumpPressed) && 
                 CursorManager.CanLook)
             {
@@ -336,6 +343,9 @@ namespace Game.Player
 
             return GravityVelovity;
         }
+
+        bool CoyoteInRange() =>
+            Time.time - _lastGroundTime <= coyoteTime;
 
         bool CheckForGround() =>
             Physics.CheckSphere(transform.position + groundPointOffset, groundPointRadius, layer);

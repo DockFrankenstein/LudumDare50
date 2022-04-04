@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
+  teleportPosition: {x: 0, y: 1.5, z: 0}
   debugText: {fileID: 8733356607433795058}
 --- !u!1001 &3621356354076864383
 PrefabInstance:

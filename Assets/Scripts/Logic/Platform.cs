@@ -94,7 +94,7 @@ namespace Game.Logic
             Vector3 oldPos = platform.transform.position;
             _pos = Vector3.Lerp(startPos, endPos, Mathf.Abs(_time / _distance));
             Vector3 newPos = transform.position + offset + _pos;
-            platform.transform.position = transform.position + offset + _pos;
+            platform.transform.localPosition = offset + _pos;
             platform.velocity = (newPos - oldPos).normalized * speed;
         }
 

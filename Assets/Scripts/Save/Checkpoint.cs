@@ -6,6 +6,7 @@ namespace Game.Save
     public class Checkpoint : MonoBehaviour
     {
         [SerializeField] string playerTag = "Player";
+        [SerializeField] Vector3 teleportPosition;
 
         [Header("Debug")]
         [SerializeField] TMPro.TMP_Text debugText;
@@ -37,7 +38,7 @@ namespace Game.Save
 
             if (PlayerMovement.IsGround)
             {
-                version = SaveManager.Save();
+                Register();
                 return;
             }
 
@@ -52,8 +53,30 @@ namespace Game.Save
 
         void HandlePlayerLand()
         {
-            version = SaveManager.Save();
+            Register();
             PlayerMovement.OnLand -= HandlePlayerLand;
+        }
+
+        void Register()
+        {
+            version = SaveManager.Save();
+            CheckpointManager.RegisterReachedCheckpoint(this);
+        }
+
+        public void TeleportPlayer()
+        {
+            PlayerReference.Singleton?.move?.Teleport(transform.position + teleportPosition);
+        }
+
+        public void UnRegister()
+        {
+            version = -1;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position + teleportPosition, 0.3f);
         }
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2666528904631779213
+--- !u!1 &6490739499564765666
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2666528904631779219}
-  - component: {fileID: 2666528904631779218}
+  - component: {fileID: 6490739499564765692}
+  - component: {fileID: 6490739499564765693}
   m_Layer: 0
-  m_Name: Heat Controller
+  m_Name: Checkpoint Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2666528904631779219
+--- !u!4 &6490739499564765692
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2666528904631779213}
+  m_GameObject: {fileID: 6490739499564765666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,23 +31,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2666528904631779218
+--- !u!114 &6490739499564765693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2666528904631779213}
+  m_GameObject: {fileID: 6490739499564765666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789d18a0d5543014396a1628e8ec861f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a5312d3816671140a2c1ea2982c20ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleHeatSpeed: 0.2
-  movementHeatSpeed: 0.5
-  sprintHeatSpeed: 1
-  jumpHeatSpeed: 2
-  dashHeatSpeed: 3
-  dashUpHeatSpeed: 3
-  minTeleport: 1
-  maxTeleport: 2
+  registeredCheckpoints: []
