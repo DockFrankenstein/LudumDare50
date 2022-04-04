@@ -1643,6 +1643,7 @@ GameObject:
   - component: {fileID: 2169065832376510621}
   - component: {fileID: 2052620050933930685}
   - component: {fileID: 4675814380549434198}
+  - component: {fileID: 4268657458230997832}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1863,7 +1864,7 @@ AudioSource:
   m_GameObject: {fileID: 5410359194375058443}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 7230028365f40dc489d6033d01aac38a, type: 2}
+  OutputAudioMixerGroup: {fileID: -8212036291596361317, guid: 7230028365f40dc489d6033d01aac38a, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1962,6 +1963,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f2fb25a84115f4ea2084d2c5839b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4268657458230997832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5410359194375058443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9cff35c22d64b498ba0f1f54cbcc7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioChannel: ambient
+  data:
+    clip: {fileID: 8300000, guid: a081be28d68d3a44e86d59a94cf2313f, type: 3}
+    group: {fileID: 580617118924872432, guid: 7230028365f40dc489d6033d01aac38a, type: 2}
+    loop: 1
+    replace: 0
+    useGlobalControls: 1
 --- !u!1 &5637870037077445639
 GameObject:
   m_ObjectHideFlags: 0

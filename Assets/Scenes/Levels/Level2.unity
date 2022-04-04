@@ -16275,6 +16275,8 @@ MonoBehaviour:
   jumpHeatSpeed: 4
   dashHeatSpeed: 3
   dashUpHeatSpeed: 4
+  minTeleport: 1
+  maxTeleport: 2
 --- !u!1 &1253274090
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 894885480001727467, guid: 664fb233cb4e3fe4580028ae7b2645c9, type: 3}
       propertyPath: m_MinValue
-      value: -60
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 894885480582642952, guid: 664fb233cb4e3fe4580028ae7b2645c9, type: 3}
       propertyPath: m_Pivot.x
@@ -113,7 +113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 894885480582642967, guid: 664fb233cb4e3fe4580028ae7b2645c9, type: 3}
       propertyPath: m_Name
-      value: Slider
+      value: Audio slider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 664fb233cb4e3fe4580028ae7b2645c9, type: 3}

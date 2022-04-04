@@ -23,7 +23,7 @@ namespace Game.Player
 
         private void Update()
         {
-            if (PlayerMovement.IsGround && Vector3.Distance(transform.position, point) >= stepLength)
+            if (PlayerMovement.IsGround && PlayerMovement.AdditionalVelocity == Vector3.zero && Vector3.Distance(transform.position, point) >= stepLength)
                 TakeStep();
         }
 
