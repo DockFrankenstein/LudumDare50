@@ -71,7 +71,6 @@ namespace Game.UI
 
         IEnumerator AnimateInfoBar(float value)
         {
-            Debug.Log(value);
             float startValue = infoBar.alpha;
             float t = Time.time;
 
