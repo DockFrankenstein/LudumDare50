@@ -27,6 +27,11 @@ namespace Game.Heat
             PlayerMovement.OnDashUp -= HandlePlayerDashUp;
         }
 
+        private void Awake()
+        {
+            HeatManager.ResetHeat();
+        }
+
         bool _overheated;
 
         private void Update()

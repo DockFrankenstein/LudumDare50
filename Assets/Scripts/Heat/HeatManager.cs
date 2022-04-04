@@ -24,7 +24,7 @@ namespace Game.Heat
         public static bool Overheated => Heat >= maxHeat;
 
         public static void ResetHeat() =>
-            Heat = minHeat;
+            _heat = minHeat;
 
         public static IEnumerator IncreaseGradually(float amount)
         {

@@ -10,6 +10,7 @@ namespace Game.Logic
         [Header("Setup")]
         [InspectorLabel("Targets")] [SerializeField] GameObject[] targetGameObjects;
         [HideInInspector] public List<IActivatable> targets = new List<IActivatable>();
+        [SerializeField] UnityEngine.Events.UnityEvent OnTrigger;
 
         [SerializeField] bool oneTimeUse = true;
         [SerializeField] bool startState = false;
@@ -54,6 +55,7 @@ namespace Game.Logic
 
         public void ForceChangeState(bool state)
         {
+            OnTrigger.Invoke();
             CurrentState = state;
 
             if (anim != null)
