@@ -17,7 +17,7 @@ MonoBehaviour:
   debugCanvasOrder: 20
   debugFontSize: 24
   debugTogglerName: debug displayer
-  debugTogglerKey: 288
+  debugTogglerKey: 289
   displayDebugGenerationMessage: 1
   debugGenerationMessage: Generated debug displayer. This only happens in the editor
     and dev build!

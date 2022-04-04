@@ -33,7 +33,7 @@ namespace Game.Commands
             }
 
             HeatManager.StopHeat = state;
-            Log($"Heat has been {(state ? "enabled" : "disabled")}!", "cheat");
+            Log($"Heat has been {(state ? "disabled" : "enabled")}!", "cheat");
         }
     }
 }

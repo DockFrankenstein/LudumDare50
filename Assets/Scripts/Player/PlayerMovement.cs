@@ -226,6 +226,7 @@ namespace Game.Player
         {
             _usedDashes++;
 
+            ResetAdditionalVelocity();
             OnDash?.Invoke();
             _isDashing = true;
             _dashStartTime = Time.time;

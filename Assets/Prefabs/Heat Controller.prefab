@@ -43,7 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789d18a0d5543014396a1628e8ec861f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleHeatSpeed: 0.1
-  movementHeatSpeed: 0.6
-  sprintHeatSpeed: 1.1
+  idleHeatSpeed: 0.2
+  movementHeatSpeed: 0.5
+  sprintHeatSpeed: 1
   jumpHeatSpeed: 2
+  dashHeatSpeed: 3
+  dashUpHeatSpeed: 3
