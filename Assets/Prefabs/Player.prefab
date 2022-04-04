@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_Texture: {fileID: 2800000, guid: dfb995691f4ea9f45bc80203604c3388, type: 3}
   m_UVRect:
     serializedVersion: 2
-    x: -1427.342
+    x: -1435.9651
     y: 0
     width: 12.444445
     height: 1
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c898998433820db4884bd6efabce4089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: -1427.342, y: 0}
+  offset: {x: -1435.9651, y: 0}
   speed: {x: -1, y: 0}
   repeatCount: {x: 7, y: 1}
 --- !u!1 &2586582289964927134
@@ -1681,7 +1681,7 @@ MonoBehaviour:
   m_Texture: {fileID: 2800000, guid: dfb995691f4ea9f45bc80203604c3388, type: 3}
   m_UVRect:
     serializedVersion: 2
-    x: 1544.4155
+    x: 1553.0386
     y: 0
     width: 12.444445
     height: 1
@@ -1697,7 +1697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c898998433820db4884bd6efabce4089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 1544.4155, y: 0}
+  offset: {x: 1553.0386, y: 0}
   speed: {x: 1, y: 0}
   repeatCount: {x: 7, y: 1}
 --- !u!1 &3557612265371158183
@@ -2253,6 +2253,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yRotation: 0
   cam: {fileID: 5410359194094398268}
+  uiCam: {fileID: 1145729654}
+  camData: {fileID: 5410359194094398266}
+  uiCamData: {fileID: 1145729652}
 --- !u!114 &5410359194375058438
 MonoBehaviour:
   m_ObjectHideFlags: 0

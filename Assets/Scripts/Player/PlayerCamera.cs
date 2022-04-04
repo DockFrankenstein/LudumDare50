@@ -1,5 +1,7 @@
 using qASIC.Options;
 using UnityEngine;
+using System;
+using UnityEngine.Rendering.Universal;
 
 namespace Game
 {
@@ -13,11 +15,55 @@ namespace Game
         [HideInInspector] public float yRotation;
 
         public Camera cam;
+        public Camera uiCam;
+        public UniversalAdditionalCameraData camData;
+        public UniversalAdditionalCameraData uiCamData;
+
+        public static bool PostProcessing { get; private set; } = true;
+        public static float FOV { get; private set; } = 60f;
+
+        [OptionsSetting("postprocessing", true)]
+        public static void ChangePostProcessing(bool value)
+        {
+            PostProcessing = value;
+            OnUpdateCameras?.Invoke();
+        }
+
+        [OptionsSetting("fov", 60f)]
+        public static void ChangeFOV(float value)
+        {
+            FOV = value;
+            OnUpdateCameras?.Invoke();
+        }
+
+        static event Action OnUpdateCameras;
+
+        private void Awake()
+        {
+            UpdateCamera();
+        }
+
+        private void OnEnable()
+        {
+            OnUpdateCameras += UpdateCamera;
+        }
+
+        private void OnDisable()
+        {
+            OnUpdateCameras -= UpdateCamera;
+        }
 
         private void Update()
         {
             if (CursorManager.CanLook)
                 Look();
+        }
+
+        void UpdateCamera()
+        {
+            camData.renderPostProcessing = PostProcessing;
+            uiCamData.renderPostProcessing = PostProcessing;
+            cam.fieldOfView = FOV;
         }
 
         void Look()

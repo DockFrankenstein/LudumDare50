@@ -13522,7 +13522,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7170080051608937289, guid: 537620bb18e6d3c4281f84c795fc9fa4, type: 3}
       propertyPath: format
-      value: Press space twice to boost up
+      value: Press {0} twice to boost up
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170080051608937289, guid: 537620bb18e6d3c4281f84c795fc9fa4, type: 3}
+      propertyPath: triggerOneTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170080051608937289, guid: 537620bb18e6d3c4281f84c795fc9fa4, type: 3}
+      propertyPath: references.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170080051608937289, guid: 537620bb18e6d3c4281f84c795fc9fa4, type: 3}
+      propertyPath: references.Array.data[0].groupName
+      value: Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170080051608937289, guid: 537620bb18e6d3c4281f84c795fc9fa4, type: 3}
+      propertyPath: references.Array.data[0].actionName
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170080051608937289, guid: 537620bb18e6d3c4281f84c795fc9fa4, type: 3}
+      propertyPath: references.Array.data[0].useDefaultGroup
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7170080051608937291, guid: 537620bb18e6d3c4281f84c795fc9fa4, type: 3}
       propertyPath: m_Name
