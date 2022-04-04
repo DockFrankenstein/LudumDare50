@@ -2,6 +2,8 @@ using Game.Heat;
 using UnityEngine;
 using UnityEngine.UI;
 
+using System.Collections;
+
 namespace Game.UI
 {
     public class OverheatUIManager : MonoBehaviour
@@ -20,11 +22,16 @@ namespace Game.UI
         [SerializeField] float errorMaxSpeed = 1.1f;
         [SerializeField] AnimationCurve errorCurve;
         [SerializeField] float errorBlinkDuration = 0.4f;
+        [SerializeField] CanvasGroup infoBar;
+        [SerializeField] float overHeatTrigger = 90f;
+        [SerializeField] [Min(0.02f)] float infoBarAnimationDuration = 0.2f;
 
         float[] _partErrorTime;
         float[] _partErrorSpeed;
 
         Color[] _normalColors;
+
+        bool _triggered;
 
         public float ErrorLevel => heatCurve.Evaluate(HeatManager.Heat / 100f);
 
@@ -46,6 +53,35 @@ namespace Game.UI
         private void Update()
         {
             Animate();
+
+            switch (_triggered)
+            {
+                case true:
+                    if (HeatManager.Heat >= overHeatTrigger) return;
+                    _triggered = false;
+                    StartCoroutine(AnimateInfoBar(0f));
+                    break;
+                case false:
+                    if (HeatManager.Heat < overHeatTrigger) return;
+                    _triggered = true;
+                    StartCoroutine(AnimateInfoBar(1f));
+                    break;
+            }
+        }
+
+        IEnumerator AnimateInfoBar(float value)
+        {
+            Debug.Log(value);
+            float startValue = infoBar.alpha;
+            float t = Time.time;
+
+            while (Time.time - t < infoBarAnimationDuration)
+            {
+                infoBar.alpha = Mathf.Lerp(startValue, value, (Time.time - t) / infoBarAnimationDuration);
+                yield return null;
+            }
+
+            infoBar.alpha = value;
         }
 
         void Animate()

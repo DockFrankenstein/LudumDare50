@@ -173,6 +173,7 @@ namespace Game.Player
             Vector3 path = new Vector3();
             Vector3 inputPath = (transform.right * input.x + transform.forward * input.y).normalized;
             bool canDash = !IsGround && _usedDashes < dashLimit && Time.time - _dashStartTime > dashRechargeDuration;
+            qDebug.DisplayValue("canDash", $"{canDash}");
 
             if (canDash && _usedDashes == 0)
                 canDash = GravityVelovity < dashLiftLimit;

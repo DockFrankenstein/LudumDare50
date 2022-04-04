@@ -18,7 +18,16 @@ namespace Game.Player
         private void Awake()
         {
             point = transform.position;
+        }
+
+        private void OnEnable()
+        {
             PlayerMovement.OnLand += TakeStep;
+        }
+
+        private void OnDisable()
+        {
+            PlayerMovement.OnLand -= TakeStep;
         }
 
         private void Update()

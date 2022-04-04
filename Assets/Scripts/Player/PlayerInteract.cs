@@ -12,6 +12,7 @@ namespace Game.Player
         [SerializeField] LayerMask targetMask;
         [SerializeField] InputActionReference interactionKey;
         [SerializeField] Transform castPoint;
+        [SerializeField] GameObject interactText;
 
         IInteractable target;
 
@@ -23,6 +24,7 @@ namespace Game.Player
         private void FixedUpdate()
         {
             Cast();
+            interactText.SetActive(target != null);
             qDebug.DisplayValue("Interactable: ", target != null);
         }
 
