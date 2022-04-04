@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 283153560}
   - component: {fileID: 283153559}
   - component: {fileID: 283153558}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15313,6 +15313,30 @@ PrefabInstance:
     - target: {fileID: 2666528904631779213, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
       propertyPath: m_Name
       value: Heat Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: dashHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: idleHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: jumpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: dashUpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: sprintHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: movementHeatSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2666528904631779219, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
       propertyPath: m_RootOrder

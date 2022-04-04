@@ -9,11 +9,17 @@ namespace Game.Heat
         const float maxHeat = 100f;
         const float gradualIncreaseTime = 1f;
 
+        public static bool StopHeat { get; set; }
+
         private static float _heat = 0f;
         public static float Heat 
         { 
             get => _heat;
-            set => _heat = Mathf.Clamp(value, minHeat, maxHeat);
+            set
+            {
+                if (StopHeat) return;
+                _heat = Mathf.Clamp(value, minHeat, maxHeat);
+            }
         }
         public static bool Overheated => Heat >= maxHeat;
 

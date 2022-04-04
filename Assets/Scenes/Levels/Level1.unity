@@ -6262,6 +6262,10 @@ PrefabInstance:
       value: Moving platform (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6029514042462333762, guid: f02873d15b472904da3717e72872f9fa, type: 3}
+      propertyPath: loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6029514042462333762, guid: f02873d15b472904da3717e72872f9fa, type: 3}
       propertyPath: endPos.z
       value: 35
       objectReference: {fileID: 0}
@@ -6535,7 +6539,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-234828
+  m_Name: pb_Mesh-1754
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8105,7 +8109,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-234514
+  m_Name: pb_Mesh-1408
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9504,6 +9508,10 @@ PrefabInstance:
     - target: {fileID: 1735970510173397035, guid: f02873d15b472904da3717e72872f9fa, type: 3}
       propertyPath: m_Name
       value: Moving platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 6029514042462333762, guid: f02873d15b472904da3717e72872f9fa, type: 3}
+      propertyPath: loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6029514042462333762, guid: f02873d15b472904da3717e72872f9fa, type: 3}
       propertyPath: endPos.z
