@@ -17,7 +17,7 @@ namespace Game.Player
 
         private void Awake()
         {
-            point = transform.position;
+            ResetPoint();
         }
 
         private void OnEnable()
@@ -32,13 +32,23 @@ namespace Game.Player
 
         private void Update()
         {
-            if (PlayerMovement.IsGround && PlayerMovement.AdditionalVelocity == Vector3.zero && Vector3.Distance(transform.position, point) >= stepLength)
-                TakeStep();
+            if (PlayerMovement.Noclip)
+                ResetPoint();
+
+            if (!PlayerMovement.IsGround ||
+                PlayerMovement.AdditionalVelocity != Vector3.zero ||
+                Vector3.Distance(transform.position, point) < stepLength * PlayerMovement.SpeedMultiplier)
+                return;
+
+            TakeStep();
         }
+
+        void ResetPoint() =>
+            point = transform.position;
 
         void TakeStep()
         {
-            point = transform.position;
+            ResetPoint();
             source.clip = clips[Random.Range(0, clips.Length)];
             source.Play();
         }

@@ -32,9 +32,9 @@ namespace Game.Save
             SaveManager.OnRevert += () => HandleRevert();
         }
 
-        private void OnTriggerEnter(Collider collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (!IsReachable() || !collision.gameObject.CompareTag(playerTag)) return;
+            if (!IsReachable() || !other.gameObject.CompareTag(playerTag)) return;
 
             if (PlayerMovement.IsGround)
             {
@@ -43,6 +43,13 @@ namespace Game.Save
             }
 
             PlayerMovement.OnLand += HandlePlayerLand;
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.gameObject.CompareTag(playerTag)) return;
+
+            PlayerMovement.OnLand -= HandlePlayerLand;
         }
 
         void HandleRevert()
