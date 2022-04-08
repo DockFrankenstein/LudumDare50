@@ -34,10 +34,10 @@ namespace qASIC.ProjectSettings
 
             if (asset == null)
             {
-#if qASIC_DEV
+#if qASIC_DEV && UNITY_EDITOR
                 asset = CreateNewDefaultInstance<t>(assetName);
 #else
-                throw new System.Exception("Cannot load qASIC project settings. Package has been modified or corrupted. Please reinstall or update!");        
+                throw new System.Exception("[qASIC] Cannot load qASIC project settings. Package has been modified or corrupted. Please reinstall or update!");        
 #endif
             }
 
@@ -56,7 +56,7 @@ namespace qASIC.ProjectSettings
 #endif
         }
 
-#if UNITY_EDITOR && qASIC_DEV
+#if UNITY_EDITOR
         private static t CreateNewDefaultInstance<t>(string assetName) where t : ProjectSettingsBase
         {
             t asset = CreateInstance<t>();

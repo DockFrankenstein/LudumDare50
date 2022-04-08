@@ -48,7 +48,7 @@ namespace qASIC.Console.Commands
                 LogError($"Scene <b>{sceneName}</b> does not exist!");
                 return;
             }
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(SceneManager.GetSceneByName(sceneName).buildIndex);
         }
 
         void LoadScene(int sceneIndex)
