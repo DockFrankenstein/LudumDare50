@@ -26,6 +26,7 @@ namespace qASIC
         private void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoad;
+            ResetPause();
         }
 
         void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -34,13 +35,22 @@ namespace qASIC
             ResetPause();
         }
 
+        bool isQuitting = false;
+
         void ResetPause()
         {
+            if (isQuitting) return;
+
             if (toggler == null) return;
             if (!toggler.State) return;
 
             //Reset pause controller
             OnChangeState(false);
+        }
+
+        private void OnApplicationQuit()
+        {
+            isQuitting = true;
         }
 
         public void Toggle(bool state) => toggler?.Toggle(state);
@@ -51,10 +61,7 @@ namespace qASIC
                 Time.timeScale = state ? 0f : 1f;
 
             if (lockCursor)
-            {
                 Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
-                Cursor.visible = state;
-            }
 
             if (pauseAudio)
             {

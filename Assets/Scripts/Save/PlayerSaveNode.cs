@@ -22,11 +22,28 @@ namespace Game.Save
 
         public override void CreateVersion(int version)
         {
-            states.Add(version, new PlayerState()
+            PlayerState state;
+            switch (CheckpointManager.CheckpointsExist())
             {
-                position = transform.position,
-                rotation = transform.rotation,
-            });
+                case true:
+                    Checkpoint checkpoint = CheckpointManager.GetLatestCheckpoint();
+
+                    state = new PlayerState()
+                    {
+                        position = checkpoint.GetPlayerRespawnPosition(),
+                        rotation = checkpoint.transform.rotation,
+                    };
+                    break;
+                default:
+                    state = new PlayerState()
+                    {
+                        position = transform.position,
+                        rotation = transform.rotation,
+                    };
+                    break;
+            }
+
+            states.Add(version, state);
         }
 
         public override void RevertVersion(int version)

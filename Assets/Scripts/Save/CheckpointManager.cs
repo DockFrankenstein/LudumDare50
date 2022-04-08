@@ -58,5 +58,20 @@ namespace Game.Save
 
             qDebug.Log("[Checkpoint manager] Player reverted!", "checkpoint");
         }
+
+        public static bool CheckpointsExist() =>
+            Singleton != null && Singleton.registeredCheckpoints.Count != 0;
+
+        public static Checkpoint GetLatestCheckpoint()
+        {
+            if (Singleton == null)
+            {
+                qDebug.LogError("[Checkpoint manager] Cannot get latest checkpoint, no singleton!");
+                return null;
+            }
+
+            List<Checkpoint> checkpoints = Singleton.registeredCheckpoints;
+            return checkpoints.Count == 0 ? null : checkpoints[checkpoints.Count - 1];
+        }
     }
 }

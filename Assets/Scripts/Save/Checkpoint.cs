@@ -59,19 +59,24 @@ namespace Game.Save
 
         void Register()
         {
-            version = SaveManager.Save();
             CheckpointManager.RegisterReachedCheckpoint(this);
+            version = SaveManager.Save();
         }
 
-        public void TeleportPlayer()
+        public void TeleportPlayer(bool save = true)
         {
-            PlayerReference.Singleton?.move?.Teleport(transform.position + teleportPosition);
+            PlayerReference.Singleton?.move?.Teleport(GetPlayerRespawnPosition());
+            if (save)
+                Register();
         }
 
         public void UnRegister()
         {
             version = -1;
         }
+
+        public Vector3 GetPlayerRespawnPosition() =>
+            transform.position + teleportPosition;
 
         private void OnDrawGizmosSelected()
         {
