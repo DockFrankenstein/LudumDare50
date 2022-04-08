@@ -10,6 +10,8 @@ namespace Game.Player
 
         Vector3 point;
 
+        PlayerMovement movement;
+
         private void Reset()
         {
             source = GetComponent<AudioSource>();
@@ -17,6 +19,8 @@ namespace Game.Player
 
         private void Awake()
         {
+            movement = GetComponent<PlayerMovement>();
+
             ResetPoint();
         }
 
@@ -32,10 +36,7 @@ namespace Game.Player
 
         private void Update()
         {
-            if (PlayerMovement.Noclip)
-                ResetPoint();
-
-            if (!PlayerMovement.IsGround ||
+            if (!movement.CheckForGround() ||
                 PlayerMovement.AdditionalVelocity != Vector3.zero ||
                 Vector3.Distance(transform.position, point) < stepLength * PlayerMovement.SpeedMultiplier)
                 return;

@@ -348,7 +348,7 @@ namespace Game.Player
         bool CoyoteInRange() =>
             Time.time - _lastGroundTime <= coyoteTime;
 
-        bool CheckForGround() =>
+        public bool CheckForGround() =>
             Physics.CheckSphere(transform.position + groundPointOffset, groundPointRadius, layer);
 
         public void ResetAdditionalVelocity() =>
