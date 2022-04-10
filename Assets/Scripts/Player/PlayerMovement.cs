@@ -188,7 +188,7 @@ namespace Game.Player
                     DashUp();
             }
 
-            switch (IsGround || UnlockAirTime)
+            switch (IsGround || (UnlockAirTime && !_isDashing))
             {
                 case true:
                     IsSprinting = InputManager.GetInput(sprintKey);
