@@ -43,11 +43,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789d18a0d5543014396a1628e8ec861f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleHeatSpeed: 0.2
-  movementHeatSpeed: 0.5
-  sprintHeatSpeed: 1
-  jumpHeatSpeed: 2
-  dashHeatSpeed: 3
-  dashUpHeatSpeed: 3
-  minTeleport: 1
-  maxTeleport: 2
+  difficulties:
+  - idleHeatSpeed: 0
+    movementHeatSpeed: 0
+    sprintHeatSpeed: 0
+    jumpHeatSpeed: 0
+    dashHeatSpeed: 0
+    dashUpHeatSpeed: 0
+    minTeleport: 0
+    maxTeleport: 0
+  - idleHeatSpeed: 0.1
+    movementHeatSpeed: 0.4
+    sprintHeatSpeed: 0.6
+    jumpHeatSpeed: 1
+    dashHeatSpeed: 1.2
+    dashUpHeatSpeed: 1.4
+    minTeleport: 2
+    maxTeleport: 3
+  - idleHeatSpeed: 0.2
+    movementHeatSpeed: 0.5
+    sprintHeatSpeed: 1
+    jumpHeatSpeed: 2
+    dashHeatSpeed: 3
+    dashUpHeatSpeed: 3
+    minTeleport: 1
+    maxTeleport: 2
+  - idleHeatSpeed: 0.4
+    movementHeatSpeed: 0.7
+    sprintHeatSpeed: 1.2
+    jumpHeatSpeed: 4
+    dashHeatSpeed: 6
+    dashUpHeatSpeed: 7
+    minTeleport: 2
+    maxTeleport: 3

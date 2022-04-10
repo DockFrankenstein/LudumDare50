@@ -16551,6 +16551,106 @@ PrefabInstance:
       propertyPath: movementHeatSpeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].maxTeleport
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].minTeleport
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].maxTeleport
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].minTeleport
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].maxTeleport
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].minTeleport
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].dashHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].idleHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].jumpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].dashHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].idleHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].jumpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].dashHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].idleHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].jumpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].dashUpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].sprintHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].dashUpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].sprintHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].dashUpHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].sprintHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[1].movementHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[2].movementHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666528904631779218, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
+      propertyPath: difficulties.Array.data[3].movementHeatSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2666528904631779219, guid: feb2d2abc0323654a8b77cd594ed8848, type: 3}
       propertyPath: m_RootOrder
       value: 6

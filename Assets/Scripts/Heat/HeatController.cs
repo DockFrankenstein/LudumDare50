@@ -6,15 +6,24 @@ namespace Game.Heat
 {
     public class HeatController : MonoBehaviour
     {
-        [SerializeField] float idleHeatSpeed = 0.1f;
-        [SerializeField] float movementHeatSpeed = 0.6f;
-        [SerializeField] float sprintHeatSpeed = 1.1f;
-        [SerializeField] float jumpHeatSpeed = 2f;
-        [SerializeField] float dashHeatSpeed = 5f;
-        [SerializeField] float dashUpHeatSpeed = 7f;
+        [SerializeField] HeatDifficulty[] difficulties;
 
-        [SerializeField] int minTeleport = 1;
-        [SerializeField] int maxTeleport = 2;
+        [System.Serializable]
+        public class HeatDifficulty
+        {
+            public float idleHeatSpeed;
+            public float movementHeatSpeed;
+            public float sprintHeatSpeed;
+            public float jumpHeatSpeed;
+            public float dashHeatSpeed;
+            public float dashUpHeatSpeed;
+
+            [Space]
+            public int minTeleport = 1;
+            public int maxTeleport = 2;
+        }
+
+        public static int Difficulty { get; set; } = 1;
 
         private void OnEnable()
         {
@@ -35,11 +44,11 @@ namespace Game.Heat
             HeatManager.ResetHeat();
         }
 
-        bool _overheated;
-
         private void Update()
         {
-            HeatManager.Heat += idleHeatSpeed * Time.deltaTime;
+            HeatDifficulty difficulty = GetDifficulty();
+
+            HeatManager.Heat += difficulty.idleHeatSpeed * Time.deltaTime;
 
             if (PlayerMovement.IsWalking)
                 HandlePlayerWalk();
@@ -47,7 +56,7 @@ namespace Game.Heat
             if (HeatManager.Overheated)
             {
                 HeatManager.ResetHeat();
-                Save.CheckpointManager.TeleportToPrevious(Random.Range(minTeleport, maxTeleport));
+                Save.CheckpointManager.TeleportToPrevious(Random.Range(difficulty.minTeleport, difficulty.maxTeleport));
             }
 
             qDebug.DisplayValue("Heat: ", HeatManager.Heat);
@@ -61,22 +70,36 @@ namespace Game.Heat
 
         void HandlePlayerWalk()
         {
-            HeatManager.Heat += (PlayerMovement.IsSprinting ? sprintHeatSpeed : movementHeatSpeed) * Time.deltaTime;
+            HeatDifficulty difficulty = GetDifficulty();
+            HeatManager.Heat += (PlayerMovement.IsSprinting ? difficulty.sprintHeatSpeed : difficulty.movementHeatSpeed) * Time.deltaTime;
         }
 
         void HandlePlayerJump()
         {
-            StartCoroutine(HeatManager.IncreaseGradually(jumpHeatSpeed));
+            StartCoroutine(HeatManager.IncreaseGradually(GetDifficulty().jumpHeatSpeed));
         }
 
         void HandlePlayerDash()
         {
-            StartCoroutine(HeatManager.IncreaseGradually(dashHeatSpeed));
+            StartCoroutine(HeatManager.IncreaseGradually(GetDifficulty().dashHeatSpeed));
         }
 
         void HandlePlayerDashUp()
         {
-            StartCoroutine(HeatManager.IncreaseGradually(dashUpHeatSpeed));
+            StartCoroutine(HeatManager.IncreaseGradually(GetDifficulty().dashUpHeatSpeed));
+        }
+
+        HeatDifficulty GetDifficulty()
+        {
+            if (difficulties.Length == 0)
+                return new HeatDifficulty();
+
+            int index = Difficulty;
+
+            if (Difficulty < 0 || Difficulty >= difficulties.Length)
+                index = 0;
+
+            return difficulties[index];
         }
     }
 }
