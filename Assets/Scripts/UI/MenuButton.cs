@@ -58,5 +58,10 @@ namespace Game.UI
             text.text = string.Format(unselectedTextFormat, buttonText);
             text.color = unselectedTextColor;
         }
+
+        private void OnDisable()
+        {
+            ResetButton();
+        }
     }
 }
